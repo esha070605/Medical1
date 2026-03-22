@@ -1,0 +1,45 @@
+# MediPulse — Cursor AI Rules
+
+## Project Identity
+This is **MediPulse**, a smart hospital health management system built with Next.js 14 (App Router), Supabase, and Claude API. It serves two primary user roles: **Doctors** and **Patients**.
+
+## Tech Stack (Non-Negotiable)
+- **Frontend**: Next.js 14 App Router, TypeScript, Tailwind CSS, shadcn/ui
+- **Backend/DB**: Supabase (Postgres + Realtime + Auth)
+- **AI Layer**: Anthropic Claude API (`claude-sonnet-4-20250514`)
+- **Real-time Vitals**: Simulated WebSocket engine (mock device data)
+- **State Management**: Zustand
+- **Charts/Viz**: Recharts
+- **Voice**: Web Speech API + Claude for SOAP note structuring
+- **PWA**: next-pwa for mobile installability
+
+## Code Style Rules
+- Always use TypeScript with strict types — no `any`
+- Use server components by default; only add `"use client"` when necessary
+- All Supabase queries go in `/lib/supabase/` — never inline in components
+- All Claude API calls go in `/lib/ai/` — never inline in components
+- Use Zod for all form validation and API response parsing
+- Folder structure follows feature-based organization (see `PROJECT_STRUCTURE.md`)
+- Every component must have a JSDoc comment explaining its purpose
+- Use `cn()` utility from shadcn for all className merging
+
+## Design System
+- Primary palette: Deep navy (`#0A1628`) + Electric cyan (`#00D4FF`) + Soft white (`#F0F4FF`)
+- Alert colors: Critical = `#FF4444`, Warning = `#FFB800`, Normal = `#00C853`
+- Font: `DM Sans` for UI, `JetBrains Mono` for data/metrics
+- All cards use glassmorphism: `bg-white/5 backdrop-blur-md border border-white/10`
+- Minimum touch target: 44x44px (mobile-first)
+- All animated transitions use Framer Motion
+
+## Security Rules
+- NEVER expose Supabase service role key on the client
+- All patient data access must verify RLS policies in Supabase
+- Doctor can only see patients assigned to them (enforced at DB level)
+- Patients can only see their own records
+- All AI-generated clinical content must show a disclaimer
+
+## File Naming
+- Components: `PascalCase.tsx`
+- Hooks: `useCamelCase.ts`
+- Utils/lib: `kebab-case.ts`
+- API routes: `route.ts` inside App Router folders
